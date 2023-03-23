@@ -1,10 +1,48 @@
-import React from 'react';
 import Document, { Html, Head, Main, NextScript } from 'next/document';
-import { ServerStyleSheets } from '@mui/styles';
-import { createTheme, StyledEngineProvider } from '@mui/material/styles';
+import { ThemeContext } from '@emotion/react';
+import { ThemeProvider } from '@mui/material/styles';
+import { CssBaseline } from '@mui/material';
 import theme from '../styles/theme';
 
 export default class MyDocument extends Document {
+  static async getInitialProps(ctx) {
+    const originalRenderPage = ctx.renderPage;
+
+    try {
+      let styles = null;
+      const { theme } = require('../styles/theme');
+
+      const enhancedRenderPage = () =>
+        originalRenderPage({
+          enhanceApp: (App) => (props) => (
+            <ThemeContext.Provider value={theme}>
+              <ThemeProvider theme={theme}>
+                <CssBaseline />
+                <App {...props} />
+              </ThemeProvider>
+            </ThemeContext.Provider>
+          ),
+        });
+
+      const renderedPage = await enhancedRenderPage();
+      styles = (
+        <>
+          {renderedPage.styles}
+          <style
+            data-emotion-css={renderedPage.ids.join(' ')}
+            dangerouslySetInnerHTML={{ __html: renderedPage.css }}
+          />
+        </>
+      );
+
+      return {
+        ...renderedPage,
+        styles,
+      };
+    } finally {
+    }
+  }
+
   render() {
     return (
       <Html lang="en">
@@ -18,36 +56,10 @@ export default class MyDocument extends Document {
           {/* Add any additional head elements you need */}
         </Head>
         <body>
-          <StyledEngineProvider injectFirst>
-            <Main />
-            <NextScript />
-          </StyledEngineProvider>
+          <Main />
+          <NextScript />
         </body>
       </Html>
     );
   }
 }
-
-MyDocument.getInitialProps = async (ctx) => {
-  const sheets = new ServerStyleSheets();
-  const originalRenderPage = ctx.renderPage;
-
-  try {
-    ctx.renderPage = () =>
-      originalRenderPage({
-        enhanceApp: (App) => (props) => sheets.collect(<App {...props} />),
-      });
-
-    const initialProps = await Document.getInitialProps(ctx);
-
-    return {
-      ...initialProps,
-      styles: [
-        ...React.Children.toArray(initialProps.styles),
-        sheets.getStyleElement({ nonce: ctx.res.locals.nonce }),
-      ],
-    };
-  } finally {
-    sheets.seal();
-  }
-};
