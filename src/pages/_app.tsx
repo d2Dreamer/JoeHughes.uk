@@ -1,21 +1,21 @@
+import { useEffect } from 'react';
 import { AppProps } from 'next/app';
 import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import globalStyles from '../styles/globalStyles';
 import theme from '../styles/theme';
 
-const GlobalStyleProxy: any = globalStyles;
+export default function MyApp({ Component, pageProps }: AppProps): JSX.Element {
+  useEffect(() => {
+    const jssStyles = document.querySelector('#jss-server-side');
+    if (jssStyles) {
+      jssStyles.parentElement!.removeChild(jssStyles);
+    }
+  }, []);
 
-function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <style jsx global>
-        <GlobalStyleProxy />
-      </style>
       <Component {...pageProps} />
     </ThemeProvider>
   );
 }
-
-export default MyApp;

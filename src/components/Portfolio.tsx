@@ -1,46 +1,34 @@
-import { useState } from 'react';
-import { Grid, Typography } from '@mui/material';
-
+import { Box, Typography } from '@mui/material';
 import PortfolioCard from './PortfolioCard';
 
-const experience = [
-  {
-    title: 'Acme Inc.',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-    role: 'Full Stack Developer',
-  },
-  {
-    title: 'XYZ Corp.',
-    description: 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem.',
-    role: 'Frontend Developer',
-  },
-];
+type PortfolioProps = {
+  title: string;
+  projects: {
+    id: number;
+    title: string;
+    description: string;
+    image: string;
+    role: string;
+  }[];
+};
 
-export default function Portfolio(props: any) {
-  const [hoveredCard, setHoveredCard] = useState<string | null>(null);
-
-  const handleCardHover = (title: string) => {
-    setHoveredCard(title);
-  };
-
-  const handleCardLeave = () => {
-    setHoveredCard(null);
-  };
-
+export const Portfolio = ({ title, projects }: PortfolioProps) => {
   return (
-    <Grid container spacing={2}>
-      {experience.map(({ title, description, role }) => (
-      <Grid item xs={12} sm={6} md={4} key={title}>
-        <div onMouseEnter={() => handleCardHover(title)} onMouseLeave={handleCardLeave}>
-            <PortfolioCard title={title} description={description} />
-            {hoveredCard === title && (
-                <Typography variant="caption" component="p" color="textSecondary">
-                    {role}
-                </Typography>
-            )}
-        </div>
-    </Grid>
-    ))}
-    </Grid>
+    <Box sx={{ my: 8 }}>
+      <Typography variant="h2" align="center" sx={{ mb: 4 }}>
+        {title}
+      </Typography>
+      <Box sx={{ display: 'grid', gap: 4 }}>
+        {projects.map((project) => (
+          <PortfolioCard
+            key={project.id}
+            title={project.title}
+            description={project.description}
+            image={project.image}
+            role={project.role}
+          />
+        ))}
+      </Box>
+    </Box>
   );
-}
+};

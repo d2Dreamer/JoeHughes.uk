@@ -1,40 +1,38 @@
-import { Card, CardContent, Typography } from '@mui/material';
-import { styled } from '@mui/material/styles';
+import { Card, CardMedia, CardContent, Typography } from "@mui/material";
 
-type PortfolioCardProps = {
+interface PortfolioCardProps {
   title: string;
   description: string;
-};
+  role: string;
+  image: string;
+}
 
-const StyledCard = styled(Card)(({ theme }) => ({
-  backgroundColor: theme.palette.primary.main,
-  color: theme.palette.primary.contrastText,
-  borderRadius: theme.spacing(1),
-  transition: 'transform 0.2s',
-  '&:hover': {
-    transform: 'scale(1.05)',
-  },
-}));
-
-const StyledCardContent = styled(CardContent)(({ theme }) => ({
-  height: '100%',
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'center',
-}));
-
-const PortfolioCard = ({ title, description }: PortfolioCardProps) => {
+const PortfolioCard: React.FC<PortfolioCardProps> = ({
+  title,
+  description,
+  role,
+  image,
+}) => {
   return (
-    <StyledCard>
-      <StyledCardContent>
-        <Typography variant="h6" component="h3">
+    <Card sx={{ maxWidth: 345 }}>
+      <CardMedia
+        component="img"
+        height="140"
+        image={image}
+        alt={title}
+      />
+      <CardContent>
+        <Typography gutterBottom variant="h5" component="div">
           {title}
         </Typography>
-        <Typography variant="body1" component="p">
+        <Typography variant="body2" color="text.secondary">
           {description}
         </Typography>
-      </StyledCardContent>
-    </StyledCard>
+        <Typography variant="caption" color="text.secondary">
+          {role}
+        </Typography>
+      </CardContent>
+    </Card>
   );
 };
 
