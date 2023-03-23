@@ -16,7 +16,7 @@ const experience = [
   },
 ];
 
-export default function Portfolio() {
+export default function Portfolio(props: any) {
   const [hoveredCard, setHoveredCard] = useState<string | null>(null);
 
   const handleCardHover = (title: string) => {
@@ -39,8 +39,8 @@ export default function Portfolio() {
                 </Typography>
             )}
         </div>
-  </Grid>
-))}
+    </Grid>
+    ))}
     </Grid>
   );
 }

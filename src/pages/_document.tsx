@@ -5,7 +5,7 @@ import { CssBaseline } from '@mui/material';
 import theme from '../styles/theme';
 
 export default class MyDocument extends Document {
-  static async getInitialProps(ctx) {
+  static async getInitialProps(ctx: any) {
     const originalRenderPage = ctx.renderPage;
 
     try {
@@ -14,7 +14,7 @@ export default class MyDocument extends Document {
 
       const enhancedRenderPage = () =>
         originalRenderPage({
-          enhanceApp: (App) => (props) => (
+          enhanceApp: (App: any) => (props: any) => (
             <ThemeContext.Provider value={theme}>
               <ThemeProvider theme={theme}>
                 <CssBaseline />
