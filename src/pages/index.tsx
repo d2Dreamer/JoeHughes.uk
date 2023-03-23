@@ -1,7 +1,7 @@
 import { Box, Container, Typography } from '@mui/material';
-import { makeStyles } from '@mui/styles';
+import { makeStyles } from '@mui/material/styles';
 import { ThemeProvider } from '@mui/material/styles';
-import { theme } from '../styles/theme';
+import theme from '../styles/theme';
 
 const useStyles = makeStyles((theme) => ({
   root: {
