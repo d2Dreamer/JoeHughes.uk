@@ -4,6 +4,7 @@ import theme from '../styles/theme'
 import { CssBaseline } from "@mui/material";
 import Portfolio from "../components/Portfolio";
 import Footer from "../components/Footer";
+import NavBar from "../components/NavBar"
 
 const portfolioData = [
   {
@@ -28,6 +29,7 @@ export default function App() {
     <React.StrictMode>
       <ThemeProvider theme={theme}>
         <CssBaseline />
+        <NavBar />
         <Portfolio portfolioData={portfolioData} />            
         <Footer />
       </ThemeProvider>

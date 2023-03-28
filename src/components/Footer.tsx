@@ -14,7 +14,7 @@ const Footer = () => {
           </Link>
         </Box>
         <Typography variant="body2" sx={{ mt: 1, textAlign: { xs: 'center', sm: 'right' } }}>
-          © {new Date().getFullYear()} Your Name. All rights reserved.
+          © {new Date().getFullYear()} Joseph Hughes. All rights reserved.
         </Typography>
       </Box>
     </Box>
