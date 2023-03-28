@@ -1,28 +1,17 @@
 import * as React from "react";
-import * as ReactDOM from "react-dom";
-import { ThemeProvider, createTheme } from "@mui/material/styles";
+import { ThemeProvider } from "@mui/material/styles";
+import theme from '../styles/theme'
 import { CssBaseline } from "@mui/material";
 import Portfolio from "../components/Portfolio";
 import Footer from "../components/Footer";
 
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: "#000000",
-    },
-    secondary: {
-      main: "#808080",
-    },
-  },
-});
-
 const portfolioData = [
   {
     id: 1,
-    title: 'Project 1',
-    description: 'This is the first project',
-    role: 'Developer',
-    image: '/project1.jpg',
+    title: 'Townesquare',
+    description: 'Web3 Social Media Platform',
+    role: 'CTO',
+    image: '../assets/townesquare.png',
   },
   {
     id: 2,
@@ -34,13 +23,14 @@ const portfolioData = [
   // ... add more project data here
 ];
 
-ReactDOM.render(
-  <React.StrictMode>
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <Portfolio portfolioData={portfolioData} />
-      <Footer />
-    </ThemeProvider>
-  </React.StrictMode>,
-  document.getElementById("root")
-);
+export default function App() {
+  return (
+    <React.StrictMode>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <Portfolio portfolioData={portfolioData} />            
+        <Footer />
+      </ThemeProvider>
+    </React.StrictMode>
+  )
+}
