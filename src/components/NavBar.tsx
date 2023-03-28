@@ -36,7 +36,7 @@ const NavBar = () => {
           </Button>
           <Button
             color="inherit"
-            variant="outlined"
+            variant="text"
             startIcon={<GetAppIcon />}
             sx={{ ml: 2 }}
             onClick={handleDownload}
