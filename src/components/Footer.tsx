@@ -1,25 +1,22 @@
-import React from 'react';
-import { Box, Container, Link, Typography } from '@mui/material';
+import { Box, Link, Typography } from '@mui/material';
 
 const Footer = () => {
   return (
-    <Box component="footer" sx={{ bgcolor: 'primary.dark', py: 6 }}>
-      <Container maxWidth="lg">
-        <Typography variant="h5" sx={{ color: 'common.white' }}>
-          JosephHughes.com
-        </Typography>
-        <Typography variant="body2" sx={{ color: 'common.white' }}>
-          © {new Date().getFullYear()} Joseph Hughes. All rights reserved.
-        </Typography>
-        <Box sx={{ mt: 4 }}>
-          <Link href="#" color="common.white" sx={{ mr: 2 }}>
-            Privacy Policy
+    <Box sx={{ py: 3, bgcolor: 'grey.900', color: 'white' }}>
+      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap' }}>
+        <Box>
+          <Link href="https://github.com/d2Dreamer" target="_blank" rel="noopener" underline="none">
+            <Typography variant="body1" sx={{ mr: 1 }}>GitHub</Typography>
           </Link>
-          <Link href="#" color="common.white">
-            Terms of Use
+          <Typography variant="body1" sx={{ mr: 1 }}></Typography>
+          <Link href="mailto:jhughes2702@gmail.com" underline="none">
+            <Typography variant="body1" sx={{ mr: 1 }}>Contact</Typography>
           </Link>
         </Box>
-      </Container>
+        <Typography variant="body2" sx={{ mt: 1, textAlign: { xs: 'center', sm: 'right' } }}>
+          © {new Date().getFullYear()} Your Name. All rights reserved.
+        </Typography>
+      </Box>
     </Box>
   );
 };
