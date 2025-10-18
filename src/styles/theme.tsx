@@ -1,33 +1,54 @@
 import { createTheme } from '@mui/material/styles';
-import { red, grey } from '@mui/material/colors';
 
-// Create a theme instance.
+// Console/Terminal theme
 const theme = createTheme({
   palette: {
+    mode: 'dark',
     primary: {
-      main: grey[800],
+      main: '#58a6ff',
     },
     secondary: {
-      main: red.A400,
+      main: '#7c3aed',
     },
     background: {
-      default: grey[50],
+      default: '#0d1117',
+      paper: '#161b22',
+    },
+    text: {
+      primary: '#c9d1d9',
+      secondary: '#8b949e',
+    },
+    error: {
+      main: '#f85149',
+    },
+    warning: {
+      main: '#d29922',
+    },
+    success: {
+      main: '#3fb950',
+    },
+    info: {
+      main: '#58a6ff',
     },
   },
   typography: {
     fontFamily: [
-      'Montserrat',
-      'Roboto',
-      '-apple-system',
-      'BlinkMacSystemFont',
-      'Segoe UI',
-      'Helvetica',
-      'Arial',
-      'sans-serif',
-      'Apple Color Emoji',
-      'Segoe UI Emoji',
-      'Segoe UI Symbol',
+      'JetBrains Mono',
+      'Monaco',
+      'Consolas',
+      'Courier New',
+      'monospace',
     ].join(','),
+  },
+  components: {
+    MuiCssBaseline: {
+      styleOverrides: {
+        body: {
+          backgroundColor: '#0d1117',
+          color: '#c9d1d9',
+        },
+      },
+    },
   },
 });
 
