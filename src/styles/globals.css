@@ -269,26 +269,36 @@ a:hover {
 
 /* Scrollbar styling */
 .console-container::-webkit-scrollbar {
-  width: 8px;
+  width: 12px;
 }
 
 .console-container::-webkit-scrollbar-track {
   background: #000000;
-  border: 1px solid #00ff00;
+  border: 2px solid #00ff00;
+  border-radius: 0;
 }
 
 .console-container::-webkit-scrollbar-thumb {
   background: #00ff00;
   border: 1px solid #000000;
+  border-radius: 0;
+  box-shadow: 0 0 5px #00ff00, inset 0 0 5px rgba(0, 255, 0, 0.3);
 }
 
 .console-container::-webkit-scrollbar-thumb:hover {
-  background: #00ff00;
-  box-shadow: 0 0 5px #00ff00;
+  background: #00cc00;
+  box-shadow: 0 0 10px #00ff00, inset 0 0 10px rgba(0, 255, 0, 0.5);
 }
 
-/* Smooth scrolling */
+.console-container::-webkit-scrollbar-thumb:active {
+  background: #00aa00;
+  box-shadow: 0 0 15px #00ff00, inset 0 0 15px rgba(0, 255, 0, 0.7);
+}
+
+/* Firefox scrollbar styling and smooth scrolling */
 .console-container {
+  scrollbar-width: thin;
+  scrollbar-color: #00ff00 #000000;
   scroll-behavior: smooth;
 }
 
