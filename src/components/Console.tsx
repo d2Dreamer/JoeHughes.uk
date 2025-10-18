@@ -210,7 +210,7 @@ PREFERRED CONTACT METHODS:
 =================
 
 FILE OPERATIONS:
-ls                    - List all available files
+ls                    - List all available files (click to open)
 cat <filename>        - Display file contents
 tree                  - Show directory structure
 
@@ -461,6 +461,11 @@ Follow me for updates on my latest projects and tech insights!`;
     }
   };
 
+  const handleFileClick = async (filename: string) => {
+    const output = executeCommand(`cat ${filename}`);
+    await addTypingCommand(`cat ${filename}`, output, 15);
+  };
+
   const addTypingCommand = async (input: string, output: string, speed: number = 20) => {
     const newCommand: Command = {
       input,
@@ -473,22 +478,48 @@ Follow me for updates on my latest projects and tech insights!`;
     setCommands(prev => [...prev, newCommand]);
     setTypingCommands(prev => [...prev, newCommand]);
     
-    // Type out the output
-    let typedOutput = '';
-    for (let i = 0; i < output.length; i++) {
-      typedOutput += output[i];
-      setCommands(prev => 
-        prev.map((cmd, index) => 
-          index === prev.length - 1 
-            ? { ...cmd, output: typedOutput, isTyping: i < output.length - 1 }
-            : cmd
-        )
-      );
+    // Special handling for ls command
+    if (input === 'ls') {
+      const files = Object.keys(fileSystem);
+      let currentFiles: string[] = [];
       
-      // Scroll to bottom during typing
-      setTimeout(() => scrollToBottom(), 0);
-      
-      await new Promise(resolve => setTimeout(resolve, speed));
+      for (let i = 0; i < files.length; i++) {
+        currentFiles.push(files[i]);
+        const fileList = currentFiles
+          .map(filename => `${getFileIcon(filename)} ${filename}`)
+          .join('\n');
+        
+        setCommands(prev => 
+          prev.map((cmd, index) => 
+            index === prev.length - 1 
+              ? { ...cmd, output: fileList, isTyping: i < files.length - 1 }
+              : cmd
+          )
+        );
+        
+        // Scroll to bottom during typing
+        setTimeout(() => scrollToBottom(), 0);
+        
+        await new Promise(resolve => setTimeout(resolve, speed * 3)); // Slower for ls
+      }
+    } else {
+      // Regular typing for other commands
+      let typedOutput = '';
+      for (let i = 0; i < output.length; i++) {
+        typedOutput += output[i];
+        setCommands(prev => 
+          prev.map((cmd, index) => 
+            index === prev.length - 1 
+              ? { ...cmd, output: typedOutput, isTyping: i < output.length - 1 }
+              : cmd
+          )
+        );
+        
+        // Scroll to bottom during typing
+        setTimeout(() => scrollToBottom(), 0);
+        
+        await new Promise(resolve => setTimeout(resolve, speed));
+      }
     }
     
     setTypingCommands(prev => prev.slice(1));
@@ -591,7 +622,7 @@ Follow me for updates on my latest projects and tech insights!`;
           opacity: 0.7,
           textShadow: '0 0 5px #00ff00, 0 0 10px #00ff00'
         }}>
-          Type 'help' for available commands • Press ↑/↓ for command history
+          Type 'help' for available commands • Press ↑/↓ for command history • Click files in 'ls' output
         </div>
       </div>
       
@@ -638,13 +669,67 @@ Follow me for updates on my latest projects and tech insights!`;
                 boxShadow: '0 0 15px rgba(0, 255, 0, 0.5), inset 0 0 10px rgba(0, 255, 0, 0.1)',
                 textShadow: '0 0 5px #00ff00, 0 0 10px #00ff00'
               }}>
-                {command.output}
-                {command.isTyping && (
-                  <span style={{
-                    animation: 'blink 1s infinite',
-                    color: '#00ff00',
-                    fontWeight: 'bold'
-                  }}>█</span>
+                {command.input === 'ls' ? (
+                  <div>
+                    {command.output.split('\n').map((line, index) => {
+                      if (!line.trim()) return null;
+                      const parts = line.split(' ');
+                      const icon = parts[0];
+                      const filename = parts.slice(1).join(' ');
+                      
+                      return (
+                        <div key={index} style={{ marginBottom: '5px' }}>
+                          <span style={{ color: '#00ff00', textShadow: '0 0 5px #00ff00' }}>
+                            {icon} 
+                          </span>
+                          <button
+                            onClick={() => handleFileClick(filename)}
+                            style={{
+                              background: 'transparent',
+                              border: 'none',
+                              color: '#00ff00',
+                              fontFamily: 'Press Start 2P, monospace',
+                              fontSize: '12px',
+                              cursor: 'pointer',
+                              textDecoration: 'underline',
+                              textShadow: '0 0 5px #00ff00, 0 0 10px #00ff00',
+                              padding: '2px 4px',
+                              margin: '0',
+                              transition: 'all 0.2s ease'
+                            }}
+                            onMouseEnter={(e) => {
+                              e.currentTarget.style.color = '#00cc00';
+                              e.currentTarget.style.textShadow = '0 0 10px #00ff00, 0 0 20px #00ff00';
+                            }}
+                            onMouseLeave={(e) => {
+                              e.currentTarget.style.color = '#00ff00';
+                              e.currentTarget.style.textShadow = '0 0 5px #00ff00, 0 0 10px #00ff00';
+                            }}
+                          >
+                            {filename}
+                          </button>
+                        </div>
+                      );
+                    })}
+                    {command.isTyping && (
+                      <span style={{
+                        animation: 'blink 1s infinite',
+                        color: '#00ff00',
+                        fontWeight: 'bold'
+                      }}>█</span>
+                    )}
+                  </div>
+                ) : (
+                  <>
+                    {command.output}
+                    {command.isTyping && (
+                      <span style={{
+                        animation: 'blink 1s infinite',
+                        color: '#00ff00',
+                        fontWeight: 'bold'
+                      }}>█</span>
+                    )}
+                  </>
                 )}
               </div>
             )}
