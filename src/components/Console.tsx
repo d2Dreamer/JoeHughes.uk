@@ -380,11 +380,10 @@ Icons: ASCII`;
         return `SOCIAL MEDIA & LINKS
 ====================
 
-GitHub: github.com/josephhughes
-LinkedIn: linkedin.com/in/josephhughes
-Twitter: @josephhughes_dev
-Website: josephhughes.dev
-Email: joseph.hughes@example.com
+GitHub: https://github.com/d2Dreamer
+LinkedIn: https://www.linkedin.com/in/jhughes-dev
+Website: https://jhugh.es
+Email: jhughes2702@gmail.com
 
 Follow me for updates on my latest projects and tech insights!`;
 
@@ -566,7 +565,7 @@ Follow me for updates on my latest projects and tech insights!`;
       };
       runInitialCommands();
     }
-  }, [initialCommands]);
+  }, [initialCommands, addTypingCommand, executeCommand]);
 
   return (
     <div 
@@ -622,7 +621,7 @@ Follow me for updates on my latest projects and tech insights!`;
           opacity: 0.7,
           textShadow: '0 0 5px #00ff00, 0 0 10px #00ff00'
         }}>
-          Type 'help' for available commands • Press ↑/↓ for command history • Click files in 'ls' output
+          Type &apos;help&apos; for available commands • Press ↑/↓ for command history • Click files in &apos;ls&apos; output
         </div>
       </div>
       
